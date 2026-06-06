@@ -9,14 +9,15 @@ function App() {
  const [answer,setAnswer] =
  useState("");
 
+ const API =
+  import.meta.env.VITE_API_URL;
+
  async function askAgent(){
 
    const response =
    await axios.post(
-    "https://your-api/chat",
-    {
-      question
-    }
+     `${API}/chat`,
+     { question }
    );
 
    setAnswer(response.data.answer);
