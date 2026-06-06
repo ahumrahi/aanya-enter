@@ -34,9 +34,9 @@ body {
 
 .input-section h1 {
   text-align: center;
-  margin-bottom: 90px;
+  margin-bottom: 40px;
   color: #0f766e;
-  font-size: 60px;
+  font-size: 48px;
   font-weight: 800;
 }
 
@@ -101,4 +101,73 @@ button:disabled {
   line-height: 1.8;
   font-size: 16px;
   color: #333;
+}
+
+/* Mobile Responsive Design */
+
+@media (max-width: 768px) {
+
+  .app-container {
+    padding: 15px;
+  }
+
+  .center-layout {
+    padding: 15px;
+  }
+
+  .input-section {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .input-section h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .top-layout .input-section h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  textarea {
+    min-height: 120px;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .response-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+  }
+
+  .response-content {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+.response-content {
+  overflow-x: auto;
+}
+
+.response-content table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+
+.response-content th,
+.response-content td {
+  border: 1px solid #ddd;
+  padding: 10px;
 }
