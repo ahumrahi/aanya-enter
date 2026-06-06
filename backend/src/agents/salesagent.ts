@@ -8,32 +8,177 @@ import { routeTool }
 from "./toolRouter";
 
 export async function salesAgent(
-  question:string
-){
+  question: string
+)  
+
+{
 
   const intent =
     await detectIntent(question);
-
+    
   const toolData =
     await routeTool(intent);
 
-  const prompt = `
+  let prompt = "";
+
+  switch (intent) {
+
+    case "lead":
+
+      prompt = `
 Question:
 ${question}
 
-Intent:
-${intent}
+Lead Data:
+${JSON.stringify(toolData, null, 2)}
 
-Tool Data:
-${JSON.stringify(toolData)}
+Provide markdown response:
 
-Provide:
+If data contains multiple customers, present them in a table.
+This table should have only customer having high buying probability based on remarks
 
-1. Analysis
-2. Recommendation
-3. Next Follow Up
-4. Sales Action
+Example:
+
+| Customer | Status | Last Contact | Next Follow Up |
+|----------|----------|-------------|---------------|
+| Amit     | Interested | 01-Jun | 08-Jun |
+
+After the table, provide:
+
+# Lead Summary
+
+# Recommended Next Action
+
+# Follow Up Date
 `;
+
+      break;
+
+    case "inventory":
+
+      prompt = `
+Question:
+${question}
+
+Inventory Data:
+${JSON.stringify(toolData, null, 2)}
+
+Provide markdown response:
+
+# Inventory Summary
+
+# Available Vehicles
+
+# Low Stock Alerts
+
+# Recommended Vehicles
+
+Do not provide customer follow up information.
+`;
+
+      break;
+
+    case "finance":
+
+      prompt = `
+Question:
+${question}
+
+Finance Data:
+${JSON.stringify(toolData, null, 2)}
+
+Provide markdown response:
+
+If data contains multiple finance details, present them in a table.
+The below table should create summary rather than detail for each vehicle
+Example:
+
+| Month | Vehicle | Revenue Amount| Total Margin|
+|----------|----------|-------------|---------------|
+| May 2025 | Nduro 2.0 | 1000000 | 300000 |
+
+After the table, provide:
+
+# Finance Summary
+
+# Outstanding Amount
+
+# Financial Recommendation
+
+Do not provide customer follow up information.
+`;
+
+      break;
+
+    case "followup":
+
+      prompt = `
+Question:
+${question}
+
+Customer Data:
+${JSON.stringify(toolData, null, 2)}
+
+Provide markdown response:
+
+# Customer
+
+# Follow Up Priority
+
+# Reason
+
+# Recommended Action
+
+# Suggested Follow Up Date
+`;
+
+      break;
+
+    case "pitch":
+
+      prompt = `
+Question:
+${question}
+
+Customer Data:
+${JSON.stringify(toolData, null, 2)}
+
+Provide markdown response:
+
+If data contains multiple customers, present them in a table.
+
+Example:
+
+| Customer | Status | Last Contact | Sales Pitch |
+|----------|----------|-------------|---------------|
+| Amit | Interested | 01-Jun | 08-Jun |
+
+After the table, provide:
+
+# Customer Profile
+
+# Vehicle Recommendation
+
+# Key Benefits
+
+`;
+
+      break;
+
+    default:
+
+      prompt = `
+Question:
+${question}
+
+Available Data:
+${JSON.stringify(toolData, null, 2)}
+
+Answer the user's question directly.
+
+Use markdown headings and bullet points where appropriate.
+`;
+  }
 
   return askLLM(prompt);
 }

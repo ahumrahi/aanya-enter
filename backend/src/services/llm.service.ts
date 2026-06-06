@@ -1,12 +1,6 @@
 import axios from "axios";
 
 export async function askLLM(prompt: string) {
-  console.log(
-    "OPENROUTER_API_KEY:",
-    process.env.OPENROUTER_API_KEY
-      ? process.env.OPENROUTER_API_KEY.substring(0, 15) + "..."
-      : "undefined"
-  );
 
   try {
     const response = await axios.post(
