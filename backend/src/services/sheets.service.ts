@@ -24,42 +24,16 @@ export async function getInventoryData() {
   const rows =
     await sheet.getRows();
 
-  return rows.map(row => ({
-    vehicle:
-      row.get("Vehicle"),
-
-    quantity:
-      row.get("Quantity"),
-
-    price:
-      row.get("Price"),
-
-    location:
-      row.get("Location")
-  }));
+  return rows.map(row => row.toObject());
 }
 
 export async function getFinanceData() {
 
-  const sheet =
-    doc.sheetsByTitle["Finance"];
+  const sheet = doc.sheetsByTitle["Finance"];
 
-  const rows =
-    await sheet.getRows();
+const rows = await sheet.getRows();
 
-  return rows.map(row => ({
-    vehicle:
-      row.get("Vehicle"),
-
-    emi:
-      row.get("EMI"),
-
-    tenure:
-      row.get("Tenure"),
-
-    rate:
-      row.get("InterestRate")
-  }));
+return rows.map(row => row.toObject());
 }
 
 export async function getLeadData() {
@@ -67,23 +41,7 @@ export async function getLeadData() {
   const sheet =
     doc.sheetsByTitle["Leads"];
 
-  const rows =
-    await sheet.getRows();
+  const rows = await sheet.getRows();
 
-  return rows.map(row => ({
-   customer:
-      row.get("Customer"),
-
-    vehicle:
-      row.get("Vehicle"),
-
-    emi:
-      row.get("EMI"),
-
-    tenure:
-      row.get("Tenure"),
-
-    rate:
-      row.get("InterestRate")
-  }));
+return rows.map(row => row.toObject());
 }
