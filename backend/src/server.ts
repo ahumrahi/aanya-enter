@@ -13,7 +13,9 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://aanya-enter.vercel.app"
-    ]
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true
   })
 );
 

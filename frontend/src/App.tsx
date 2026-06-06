@@ -12,16 +12,29 @@ function App() {
  const API =
   import.meta.env.VITE_API_URL;
 
- async function askAgent(){
+ async function askAgent() {
 
-   const response =
-   await axios.post(
-     `${API}/chat`,
-     { question }
-   );
+  console.log("API:", API);
+  console.log("Question:", question);
 
-   setAnswer(response.data.answer);
- }
+  try {
+
+    const response =
+      await axios.post(
+        `${API}/chat`,
+        { question }
+      );
+
+    console.log("Response:", response.data);
+
+    setAnswer(response.data.answer);
+
+  } catch (error) {
+
+    console.error("API Error:", error);
+
+  }
+}
 
  return (
   <>
