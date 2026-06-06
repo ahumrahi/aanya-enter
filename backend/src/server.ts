@@ -1,5 +1,10 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
+import chatRouter from "./routes/chat.route";
+
 
 const app = express();
 
@@ -11,22 +16,23 @@ app.use(
     ]
   })
 );
+
 app.use(express.json());
+
+app.use("/", chatRouter);
 
 app.get("/", (req, res) => {
   res.send("Sales Agent Running");
 });
 
-app.get(
- "/health",
- (req,res)=>{
-
+app.get("/health", (req, res) => {
   res.json({
-    status:"UP"
+    status: "UP"
   });
+});
 
- });
+const PORT = process.env.PORT || 3001;
 
-app.listen(3001, () => {
-  console.log("Running");
+app.listen(PORT, () => {
+  console.log(`Running on ${PORT}`);
 });
