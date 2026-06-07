@@ -7,6 +7,9 @@ from "../services/intent.service";
 import { routeTool }
 from "./toolRouter";
 
+import { convertToTOON }
+from "../utils/toon";
+
 export async function salesAgent(
   question: string
 )  
@@ -19,6 +22,11 @@ export async function salesAgent(
   const toolData =
     await routeTool(intent);
 
+  const toonData =
+  Array.isArray(toolData)
+    ? convertToTOON(toolData)
+    : JSON.stringify(toolData);    
+
   let prompt = "";
 
   switch (intent) {
@@ -29,8 +37,11 @@ export async function salesAgent(
 Question:
 ${question}
 
-Lead Data:
-${JSON.stringify(toolData, null, 2)}
+Lead Data (TOON Format):
+${toonData}
+
+The data is in TOON format.
+Columns are separated by "|".
 
 Provide markdown response:
 
@@ -60,8 +71,11 @@ After the table, provide:
 Question:
 ${question}
 
-Inventory Data:
-${JSON.stringify(toolData, null, 2)}
+Inventory Data (TOON Format):
+${toonData}
+
+The data is in TOON format.
+Columns are separated by "|".
 
 Provide markdown response:
 
@@ -84,8 +98,11 @@ Do not provide customer follow up information.
 Question:
 ${question}
 
-Finance Data:
-${JSON.stringify(toolData, null, 2)}
+Finance Data (TOON Format):
+${toonData}
+
+The data is in TOON format.
+Columns are separated by "|".
 
 Provide markdown response:
 

@@ -26,7 +26,7 @@ export async function getInventoryData() {
     await sheet.getRows();
 
   return rows
-  .slice(0, 100)
+  .slice(0, 100000)
   .map(row => row.toObject());
 }
 
@@ -38,7 +38,6 @@ export async function getFinanceData() {
 const rows = await sheet.getRows();
 
 return rows
-  .slice(0, 100)
   .map(row => row.toObject());
 }
 
@@ -51,6 +50,5 @@ export async function getLeadData() {
   const rows = await sheet.getRows();
 
 return rows
-  .slice(0, 100)
   .map(row => row.toObject());
 }
